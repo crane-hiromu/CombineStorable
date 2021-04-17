@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-s.name         = "Storable"
+s.name         = "Storable-Combine"
 s.version      = "1.0.0"
 s.summary      = "Handy Combine extensions on NSObject, including Set<AnyCancellable>."
 s.license      = { :type => 'MIT', :file => 'LICENSE' }
