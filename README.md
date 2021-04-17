@@ -44,7 +44,7 @@ Furthermore, ``.store(in: &self.cancellables)`` can be omitted.
 
 
 ```swift
-final class Object: NSObject, Storable { // import Storable
+final class Object: NSObject, Storable {
 
     func exec() {
         Just<Int>(0)
@@ -56,6 +56,8 @@ final class Object: NSObject, Storable { // import Storable
     }
 }
 ```
+
+For a detailed explanation, please read [here]().
 
 
 ## Installing
@@ -83,8 +85,6 @@ Add the following dependency to your Package.swift file:
 ```
 .package(url: "https://github.com/crane-hiromu/Storable.git", from: "1.0.0")
 ```
-
-### Example
 
 ### License
 
