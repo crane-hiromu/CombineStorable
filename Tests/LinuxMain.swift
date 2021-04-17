@@ -1,7 +1,7 @@
 import XCTest
 
-import StorableTests
+import CombineStorableTests
 
 var tests = [XCTestCaseEntry]()
-tests += StorableTests.allTests()
+tests += CombineStorableTests.allTests()
 XCTMain(tests)

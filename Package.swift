@@ -4,19 +4,19 @@
 import PackageDescription
 
 let package = Package(
-    name: "Storable",
+    name: "CombineStorable",
     products: [
         .library(
-            name: "Storable",
-            targets: ["Storable"]),
+            name: "CombineStorable",
+            targets: ["CombineStorable"]),
     ],
     dependencies: [],
     targets: [
         .target(
-            name: "Storable",
+            name: "CombineStorable",
             dependencies: []),
         .testTarget(
-            name: "StorableTests",
-            dependencies: ["Storable"]),
+            name: "CombineStorableTests",
+            dependencies: ["CombineStorable"]),
     ]
 )
