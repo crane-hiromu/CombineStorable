@@ -67,7 +67,7 @@ For a detailed explanation, please read [here]().
 Add the following line to your Podfile:
 
 ```
-pod 'CombineStorable'
+pod 'CombineStorable', :git => 'git@github.com:crane-hiromu/CombineStorable.git', :branch => 'main'
 ```
 
 ### Carthage
