@@ -48,7 +48,7 @@ final class Object: NSObject, Storable {
 
     func exec() {
         Just<Int>(0)
-            .sink(receiveCompletion: { _ in
+            .sink(self, receiveCompletion: { _ in // input self
                 // do something
             }, receiveValue: { _ in 
                 // do something
