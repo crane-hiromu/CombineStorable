@@ -67,7 +67,7 @@ For a detailed explanation, please read [here]().
 Add the following line to your Podfile:
 
 ```
-pod 'Storable'
+pod 'CombineStorable'
 ```
 
 ### Carthage
@@ -75,7 +75,7 @@ pod 'Storable'
 Add the following to your Cartfile:
 
 ```
-github "crane-hiromu/Storable"
+github "crane-hiromu/CombineStorable"
 ```
 
 ### Swift Package Manager
@@ -83,7 +83,7 @@ github "crane-hiromu/Storable"
 Add the following dependency to your Package.swift file:
 
 ```
-.package(url: "https://github.com/crane-hiromu/Storable.git", from: "v1.0.0")
+.package(url: "https://github.com/crane-hiromu/CombineStorable.git", from: "v1.0.0")
 ```
 
 ### License
