@@ -19,8 +19,53 @@ final class StorableTests: XCTestCase {
     
     final class StubObject: NSObject, Storable {
         
+        // MARK: Store Method
+        
         // case1
-        func sink(
+        func sinkWithStore(
+            value: String,
+            receiveCompletion: @escaping (String) -> Void,
+            receiveValue: @escaping (String) -> Void
+        ) {
+            Just<String>(value)
+                .sink(receiveCompletion: { result in
+                    switch result {
+                    case .finished:
+                        receiveCompletion("finished")
+                    case .failure(_):
+                        receiveCompletion("error")
+                    }
+                }, receiveValue: { value in
+                    receiveValue(value)
+                })
+                .store(in: &self.cancellables)
+        }
+        
+        // case2
+        func sinkWithStore(
+            value: String,
+            receiveValue: @escaping (String) -> Void
+        ) {
+            Just<String>(value)
+                .sink(receiveValue: { value in
+                    receiveValue(value)
+                })
+                .store(in: &self.cancellables)
+        }
+        
+        // case3
+        var valueWithStore = 0
+        
+        func assignWithStore(value: Int) {
+            Just<Int>(value)
+                .assign(to: \.valueWithStore, on: self)
+                .store(in: &self.cancellables)
+        }
+        
+        // MARK: No store Method
+        
+        // case1
+        func sinkWithNoStore(
             value: String,
             receiveCompletion: @escaping (String) -> Void,
             receiveValue: @escaping (String) -> Void
@@ -39,7 +84,7 @@ final class StorableTests: XCTestCase {
         }
         
         // case2
-        func sink(
+        func sinkWithNoStore(
             value: String,
             receiveValue: @escaping (String) -> Void
         ) {
@@ -50,29 +95,31 @@ final class StorableTests: XCTestCase {
         }
         
         // case3
-        var value = 0
+        var valueWithNoStore = 0
         
-        func assign(value: Int) {
+        func assignWithNoStore(value: Int) {
             Just<Int>(value)
-                .assign(to: \.value, on: self)
+                .assign(to: \.valueWithNoStore, on: self)
         }
     }
     
     // MARK: Prorperty
     
     static var allTests = [
-        ("testSinkWithCompletionAndValue", testSinkWithCompletionAndValue),
-        ("testSinkWithValue", testSinkWithValue),
-        ("testAssign", testAssign),
+        ("testSinkWithCompletionAndValueWithStore", testSinkWithCompletionAndValueWithStore),
+        ("testSinkWithValueWithStore", testSinkWithValueWithStore),
+        ("testAssignWithStore", testAssignWithStore),
+        ("testSinkWithCompletionAndValueWithNoStore", testSinkWithCompletionAndValueWithNoStore),
+        ("testSinkWithValueWithNoStore", testSinkWithValueWithNoStore),
+        ("testAssignWithNoStore", testAssignWithNoStore)
     ]
     
     private let stubObject = StubObject()
     
     // MARK: Test
     
-    
-    func testSinkWithCompletionAndValue() {
-        stubObject.sink(value: "\(#function)", receiveCompletion: { value in
+    func testSinkWithCompletionAndValueWithStore() {
+        stubObject.sinkWithStore(value: "\(#function)", receiveCompletion: { value in
             XCTAssertEqual(value, "finished")
         }, receiveValue: { value in
             XCTAssertEqual(value, "\(#function)")
@@ -80,15 +127,35 @@ final class StorableTests: XCTestCase {
         })
     }
     
-    func testSinkWithValue() {
-        stubObject.sink(value: "\(#function)", receiveValue: { value in
+    func testSinkWithValueWithStore() {
+        stubObject.sinkWithStore(value: "\(#function)", receiveValue: { value in
             XCTAssertEqual(value, "\(#function)")
         })
     }
     
-    func testAssign() {
-        stubObject.assign(value: 999)
-        XCTAssertEqual(stubObject.value, 999)
+    func testAssignWithStore() {
+        stubObject.assignWithStore(value: 999)
+        XCTAssertEqual(stubObject.valueWithStore, 999)
+    }
+    
+    func testSinkWithCompletionAndValueWithNoStore() {
+        stubObject.sinkWithNoStore(value: "\(#function)", receiveCompletion: { value in
+            XCTAssertEqual(value, "finished")
+        }, receiveValue: { value in
+            XCTAssertEqual(value, "\(#function)")
+            
+        })
+    }
+    
+    func testSinkWithValueWithNoStore() {
+        stubObject.sinkWithNoStore(value: "\(#function)", receiveValue: { value in
+            XCTAssertEqual(value, "\(#function)")
+        })
+    }
+    
+    func testAssignWithNoStore() {
+        stubObject.assignWithNoStore(value: 9999)
+        XCTAssertEqual(stubObject.valueWithNoStore, 9999)
     }
 }
 
