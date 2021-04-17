@@ -15,11 +15,6 @@ import Combine
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 final class StorableTests: XCTestCase {
     
-    
-    static var allTests = [
-        ("testExample", testSinkWithCompletionAndValue),
-    ]
-    
     // MARK: Class
     
     final class StubObject: NSObject, Storable {
@@ -65,6 +60,12 @@ final class StorableTests: XCTestCase {
     
     // MARK: Prorperty
     
+    static var allTests = [
+        ("testSinkWithCompletionAndValue", testSinkWithCompletionAndValue),
+        ("testSinkWithValue", testSinkWithValue),
+        ("testAssign", testAssign),
+    ]
+    
     private let stubObject = StubObject()
     
     // MARK: Test
@@ -86,11 +87,8 @@ final class StorableTests: XCTestCase {
     }
     
     func testAssign() {
-
-//        stubObject.assign(value: 999)
-
-//
-//        XCTFail("-----")
+        stubObject.assign(value: 999)
+        XCTAssertEqual(stubObject.value, 999)
     }
 }
 
