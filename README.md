@@ -60,7 +60,7 @@ final class Object: NSObject, Storable {
 }
 ```
 
-For a detailed explanation, please read [here]()(Coming Soon).
+For a detailed explanation, please read [here](https://qiita.com/hcrane/items/c9ae8427a5c6d8fc08ee).
 
 
 ## Installing
