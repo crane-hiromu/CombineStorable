@@ -13,21 +13,32 @@ import Combine
 // MARK: - Private Property
 private var cancellableContext: UInt8 = 0
 
+// MARK: - Private Wrapper Class
+@available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
+private class CancellableWrapper {
+    let cancellables: Set<AnyCancellable>
+    
+    init(cancellables: Set<AnyCancellable>) {
+        self.cancellables = cancellables
+    }
+}
+
 // MARK: - NSObject Extension
 @available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, *)
 public extension NSObject {
 
     var cancellables: Set<AnyCancellable> {
         get {
-            if let cancellables = objc_getAssociatedObject(self, &cancellableContext) as? Set<AnyCancellable> {
-                return cancellables
+            if let wrapper = objc_getAssociatedObject(self, &cancellableContext) as? CancellableWrapper {
+                return wrapper.cancellables
             }
             let cancellables = Set<AnyCancellable>()
-            objc_setAssociatedObject(self, &cancellableContext, cancellables, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            self.cancellables = cancellables
             return cancellables
         }
         set {
-            objc_setAssociatedObject(self, &cancellableContext, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            let wrapper = CancellableWrapper(cancellables: newValue)
+            objc_setAssociatedObject(self, &cancellableContext, wrapper, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }
     }
 }
