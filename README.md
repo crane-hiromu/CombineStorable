@@ -81,6 +81,12 @@ Add the following to your Cartfile:
 github "crane-hiromu/CombineStorable"
 ```
 
+#### Supplement
+
+If you fail to install, reset caches. (``rm -rf ~/Library/Caches/``)
+
+
+
 ### Swift Package Manager
 
 Add the following dependency to your Package.swift file:
@@ -92,3 +98,7 @@ Add the following dependency to your Package.swift file:
 ### License
 
 MIT, of course ;-) See the LICENSE file.
+
+
+
+
